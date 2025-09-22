@@ -1,7 +1,18 @@
 # ------------- WAVE 1 --------------------
 
 def create_movie(title, genre, rating):
-    pass
+    #print(rating)
+    if not (title and genre and rating):
+        #print('None')
+        return None
+    else:
+        movie_data = {
+            'title': title,
+            'genre': genre,
+            'rating': rating,
+        }
+        #print(movie_data)
+        return movie_data
 
 # -----------------------------------------
 # ------------- WAVE 2 --------------------
@@ -12,7 +23,7 @@ def create_movie(title, genre, rating):
 # ------------- WAVE 3 --------------------
 # -----------------------------------------
 
-        
+
 # -----------------------------------------
 # ------------- WAVE 4 --------------------
 # -----------------------------------------
@@ -21,3 +32,4 @@ def create_movie(title, genre, rating):
 # ------------- WAVE 5 --------------------
 # -----------------------------------------
 
+create_movie("It Came from the Stack Trace", "Horror", 3.1)
