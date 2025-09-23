@@ -42,6 +42,59 @@ def watch_movie(user_data, title):
 # ------------- WAVE 2 --------------------
 # -----------------------------------------
 
+def get_watched_avg_rating(user_data):
+    watched_list = user_data['watched']
+    #print(watched_list)
+    sum = 0
+
+    # Access dict value to check if empty, if empty then return a rating of 0.0
+    for value in user_data.values():
+        if value == []:
+            #print(0.0)
+            return 0.0
+    # loop through watched list to get rating of movies and total it to the sum
+    for watched in watched_list:
+        #print(watched)
+        rating = watched['rating']
+        #print(f"this is the rating: {rating}")
+        sum += rating
+        #print(f'this is sum: {sum}')
+    # Divide sum with length of the watched_list to get thte average rating
+    average_rating = sum / len(watched_list)
+    #print(average_rating)
+    return average_rating
+
+def get_most_watched_genre(user_data):
+    watched_list = user_data['watched']
+    counts = {}
+    # Access dict value to check if empty, if empty then return None
+    for value in user_data.values():
+        if value == []:
+            # print(None)
+            return None
+
+    for watched in watched_list:
+        genre = watched['genre']
+
+        if genre not in counts:
+            # Add it into count dict
+            counts[genre] = 1
+        else:
+            # If already in count dict then increase its number
+            counts[genre] = counts[genre] + 1
+
+    highest_count = 0
+    highest_genre = None
+
+    for genre, count in counts.items():
+        # Compare if count value greater then the current highest
+        if count > highest_count:
+            # If true then set the highest count to be the count and set highest genre to genre
+            highest_count = count
+            highest_genre = genre
+
+    #print(highest_genre)
+    return highest_genre
 
 # -----------------------------------------
 # ------------- WAVE 3 --------------------
@@ -55,3 +108,5 @@ def watch_movie(user_data, title):
 # -----------------------------------------
 # ------------- WAVE 5 --------------------
 # -----------------------------------------
+
+#get_most_watched_genre(USER_DATA_2)
