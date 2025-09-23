@@ -1,12 +1,13 @@
 # ------------- WAVE 1 --------------------
 
 def create_movie(title, genre, rating):
-
     #print(rating)
+    # if any attributes false then return None
     if not (title and genre and rating):
         #print('None')
         return None
     else:
+    # if truthy then return dict of movie data
         movie_data = {
             'title': title,
             'genre': genre,
@@ -14,11 +15,13 @@ def create_movie(title, genre, rating):
         }
         #print(movie_data)
         return movie_data
-    
 
-    
+def add_to_watched(user_data, movie):
+    # append movie to watched list
+    user_data['watched'].append(movie)
 
-
+    #print(user_data)
+    return user_data
 
 def add_to_watchlist(user_data, movie):
     #located the watchlist in user_data and add movie into watchlist
@@ -52,5 +55,3 @@ def watch_movie(user_data, title):
 # -----------------------------------------
 # ------------- WAVE 5 --------------------
 # -----------------------------------------
-
-# create_movie("It Came from the Stack Trace", "Horror", 3.1)
