@@ -105,8 +105,33 @@ def get_most_watched_genre(user_data):
 # ------------- WAVE 4 --------------------
 # -----------------------------------------
 
+def get_available_recs(user_data):
+    user_watched_movies = [] # store users watched movies
+    recommended_movies = [] #store recommended movies
+
+    # loop through waht user has watched
+    for user_movie in user_data['watched']:
+        # add users watched movies into empty list to track
+        user_watched_movies.append(user_movie['title'])
+
+    for friend in user_data['friends']:
+        for movie in friend['watched']:
+            # if user has not watched and friend(s) has watched
+            if movie['title'] not in user_watched_movies:
+                    # print(f'user has not watched: {movie['title']}, check if have host')
+                    # if user has host for that movie
+                    if movie['host'] in user_data['subscriptions']:
+                        #print(f'user has host: {movie['host']} for {movie['title']}')
+                        #if movie not already in recommended
+                        if movie not in recommended_movies:
+                            # then add movie to recommended
+                            recommended_movies.append(movie)
+                    #print(f'user does not have {movie['host']} for {movie['title']}')
+
+    #return list
+    #print(recommended_movies)
+    return recommended_movies
+
 # -----------------------------------------
 # ------------- WAVE 5 --------------------
 # -----------------------------------------
-
-#get_most_watched_genre(USER_DATA_2)
