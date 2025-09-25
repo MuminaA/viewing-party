@@ -164,3 +164,65 @@ def get_available_recs(user_data):
 # -----------------------------------------
 # ------------- WAVE 5 --------------------
 # -----------------------------------------
+def get_new_rec_by_genre(user_data):
+    user_watched = []
+    friend_watched = []
+    all_rec_movie = []
+    genre_rec_movie = []
+
+    for user in user_data["watched"]:
+        user_watched.append(user["title"])
+
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:          
+            if movie["title"] not in user_watched \
+                and movie["title"] not in friend_watched:
+                all_rec_movie.append(movie)
+                friend_watched.append(movie["title"])
+    
+    most_f_genre = most_frequent_genre(user_data)
+    for sel_movie in all_rec_movie:
+        if sel_movie["genre"] in most_f_genre:
+            genre_rec_movie.append(sel_movie)
+
+    return genre_rec_movie
+
+
+def get_rec_from_favorites(user_data):
+    friend_watched = []
+    rec_from_fav = []
+
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            friend_watched.append(movie["title"])
+    
+    for user_favorite in user_data["favorites"]:
+        if user_favorite["title"] not in friend_watched:
+            rec_from_fav.append(user_favorite)
+        
+    return rec_from_fav
+
+def most_frequent_genre(user_data):
+    genre_dict = {}
+    highest_count = 0
+    most_frequent_genre = []
+
+    for user in user_data["watched"]:
+        if user["genre"] not in genre_dict:
+            genre_dict[user["genre"]] = 0
+            count = 0
+        genre_dict[user["genre"]] += 1
+        count += 1
+        if count > highest_count:
+            highest_count = count
+    for genre, count in genre_dict.items():
+        if count == highest_count:
+            most_frequent_genre.append(genre)
+        
+    return most_frequent_genre
+
+        
+
+
+
+
