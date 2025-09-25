@@ -59,7 +59,7 @@ def test_new_genre_rec_from_empty_friends():
 
     # Assert
 
-    assert recommendations == None
+    assert recommendations == []
 
 
     # *********************************************************************
