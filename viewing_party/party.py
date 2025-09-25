@@ -96,5 +96,71 @@ def get_most_watched_genre(user_data):
     #print(highest_genre)
     return highest_genre
 
+# -----------------------------------------
+# ------------- WAVE 3 --------------------
+# -----------------------------------------
+def get_unique_watched(user_data):
+    user_unique_watched = []
+    friend_movie_title = []
+    for friend in user_data["friends"]:
+        friend_list = friend["watched"]
+        for movie in friend_list:
+            friend_movie_title.append(movie["title"])
+    for user in user_data["watched"]:
+        if user["title"] not in friend_movie_title:
+            user_unique_watched.append(user)
+    return user_unique_watched
 
-#get_most_watched_genre(USER_DATA_2)
+
+def get_friends_unique_watched(user_data):
+    user_movie_title = []
+    friend_unique_watched = []
+    result = []
+
+    for user in user_data["watched"]:
+        user_movie_title.append(user["title"])
+
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:          
+            if movie["title"] not in user_movie_title \
+                and movie["title"] not in friend_unique_watched:
+                result.append(movie)
+                friend_unique_watched.append(movie["title"])
+
+    return result
+
+
+# -----------------------------------------
+# ------------- WAVE 4 --------------------
+# -----------------------------------------
+
+def get_available_recs(user_data):
+    user_watched_movies = [] # store users watched movies
+    recommended_movies = [] #store recommended movies
+
+    # loop through waht user has watched
+    for user_movie in user_data['watched']:
+        # add users watched movies into empty list to track
+        user_watched_movies.append(user_movie['title'])
+
+    for friend in user_data['friends']:
+        for movie in friend['watched']:
+            # if user has not watched and friend(s) has watched
+            if movie['title'] not in user_watched_movies:
+                    # print(f'user has not watched: {movie['title']}, check if have host')
+                    # if user has host for that movie
+                    if movie['host'] in user_data['subscriptions']:
+                        #print(f'user has host: {movie['host']} for {movie['title']}')
+                        #if movie not already in recommended
+                        if movie not in recommended_movies:
+                            # then add movie to recommended
+                            recommended_movies.append(movie)
+                    #print(f'user does not have {movie['host']} for {movie['title']}')
+
+    #return list
+    #print(recommended_movies)
+    return recommended_movies
+
+# -----------------------------------------
+# ------------- WAVE 5 --------------------
+# -----------------------------------------
