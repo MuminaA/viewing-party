@@ -170,6 +170,9 @@ def get_new_rec_by_genre(user_data):
     all_rec_movie = []
     genre_rec_movie = []
 
+    if genre_rec_movie == []:
+        return None
+
     for user in user_data["watched"]:
         user_watched.append(user["title"])
 
