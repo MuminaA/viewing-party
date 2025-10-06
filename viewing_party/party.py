@@ -35,6 +35,7 @@ def watch_movie(user_data, title):
         if title == movie["title"]: # Compare if title is equal to the title in waiting_watch
             user_data["watched"].append(movie) #If above condition is true then add the movie into the watched list in user_data
             waiting_watch.remove(movie) #and remove the movie from the waiting_watch list
+            break   
     return user_data
     
 
@@ -195,7 +196,7 @@ def get_new_rec_by_genre(user_data):
                 friend_watched.append(movie["title"])
     
     #call helper function
-    most_f_genre = most_frequent_genre(user_data)
+    most_f_genre = get_most_watched_genre(user_data)
     #match the genre and add it into a new list
     for sel_movie in all_rec_movie:
         if sel_movie["genre"] in most_f_genre:
@@ -220,35 +221,6 @@ def get_rec_from_favorites(user_data):
             rec_from_fav.append(user_favorite)
         
     return rec_from_fav
-
-
-#Helper Function to grab the most_frequent_genre
-def most_frequent_genre(user_data):
-    #Assign empty dict, int, and list to variables
-    genre_dict = {}
-    highest_count = 0
-    most_frequent_genre = []
-
-    #loop through the user_data watched movie
-    for user in user_data["watched"]:
-        #if the movie genre is not in the genre dictionary
-        #then assign the genre and initiate the count as 0 
-        # (key: genre, value: count)
-        if user["genre"] not in genre_dict:
-            genre_dict[user["genre"]] = 0
-            count = 0
-        #sum up the count for each different genre
-        genre_dict[user["genre"]] += 1
-        count += 1
-        #Figure out the highest count
-        if count > highest_count:
-            highest_count = count
-    #grab the genre(key) related to the highest count and add them to the list
-    for genre, count in genre_dict.items():
-        if count == highest_count:
-            most_frequent_genre.append(genre)
-        
-    return most_frequent_genre
 
         
 

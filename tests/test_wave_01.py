@@ -75,9 +75,11 @@ def test_adds_movie_to_user_watched():
 
     # Assert
     assert len(updated_data["watched"]) == 1
-    assert updated_data["watched"][0]["title"] == MOVIE_TITLE_1
-    assert updated_data["watched"][0]["genre"] == GENRE_1
-    assert updated_data["watched"][0]["rating"] == RATING_1
+    assert updated_data["watched"][0] == {
+        "title": MOVIE_TITLE_1,
+        "genre": GENRE_1,
+        "rating": RATING_1,
+    }
 
 # @pytest.mark.skip()
 def test_adds_movie_to_non_empty_user_watched():
@@ -185,8 +187,8 @@ def test_moves_movie_from_watchlist_to_watched():
     assert len(updated_data["watched"]) == 2
     
     # raise Exception("Test needs to be completed.")
-    assert updated_data["watched"][1]["title"] == movie_to_watch["title"]
-
+    assert HORROR_1 in updated_data["watched"]
+    assert FANTASY_1 in updated_data["watchlist"]
     # *******************************************************************************************
     # ****** Add assertions here to test that the correct movie was added to "watched" **********
     # *******************************************************************************************
