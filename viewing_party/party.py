@@ -156,55 +156,31 @@ def get_available_recs(user_data):
 # ------------- WAVE 5 --------------------
 # -----------------------------------------
 def get_new_rec_by_genre(user_data):
-    #Assign empty list to variables
-    user_watched = []
-    friend_watched = []
-    all_rec_movie = []
+    #grab user_movie_list, friend_movie_list, and user_genre
+    user_watched = get_unique_watched(user_data)
+    friend_watched = get_friends_unique_watched(user_data)
+    most_f_genre = get_most_watched_genre(user_data)
+
     genre_rec_movie = []
 
-    #add user watched movie title into user_watched
-    for user in user_data["watched"]:
-        user_watched.append(user["title"])
-
-    #add friend watched movie title into friend_watched 
-    #and recommendation movie list 
-    #Also remove duplicate
-    for friend in user_data["friends"]:
-        for movie in friend["watched"]:          
-            if movie["title"] not in user_watched \
-                and movie["title"] not in friend_watched:
-                all_rec_movie.append(movie)
-                friend_watched.append(movie["title"])
-    
-    #call helper function
-    most_f_genre = get_most_watched_genre(user_data)
-    #match the genre and add it into a new list
-    for sel_movie in all_rec_movie:
-        if sel_movie["genre"] in most_f_genre:
-            genre_rec_movie.append(sel_movie)
+    for friend_movie in friend_watched:
+        if (friend_movie["genre"] == most_f_genre and 
+            friend_movie != user_watched ):
+            genre_rec_movie.append(friend_movie)
 
     return genre_rec_movie
 
 
+
 def get_rec_from_favorites(user_data):
-    friend_watched = []
+    user_unique_watch = get_unique_watched(user_data)
     rec_from_fav = []
 
-    #add all friend watched list into the friend_watched list
-    for friend in user_data["friends"]:
-        for movie in friend["watched"]:
-            friend_watched.append(movie["title"])
-    
-    #if friend did not watch and is in user's favorite list 
-    #then add them to rec_from_fav list
     for user_favorite in user_data["favorites"]:
-        if user_favorite["title"] not in friend_watched:
+        if user_favorite in user_unique_watch:
             rec_from_fav.append(user_favorite)
         
     return rec_from_fav
 
         
-
-
-
 
