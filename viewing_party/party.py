@@ -165,7 +165,7 @@ def get_new_rec_by_genre(user_data):
 
     for friend_movie in friend_watched:
         if (friend_movie["genre"] == most_f_genre and 
-            friend_movie != user_watched ):
+            friend_movie not in user_watched ):
             genre_rec_movie.append(friend_movie)
 
     return genre_rec_movie
