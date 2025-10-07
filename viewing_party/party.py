@@ -174,13 +174,14 @@ def get_new_rec_by_genre(user_data):
 
 def get_rec_from_favorites(user_data):
     user_unique_watch = get_unique_watched(user_data)
-    rec_from_fav = []
 
-    for user_favorite in user_data["favorites"]:
-        if user_favorite in user_unique_watch:
-            rec_from_fav.append(user_favorite)
+    user_unique_watch_title = set(movie["title"] for movie in user_unique_watch)
+
+    rec_from_fav = [
+        user_favorite for user_favorite in user_data["favorites"]
+        if user_favorite["title"] in user_unique_watch_title
+    ]
         
     return rec_from_fav
 
         
-
